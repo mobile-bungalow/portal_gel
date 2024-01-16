@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://bkely0bnm8po4"]
+
+[ext_resource type="PackedScene" uid="uid://53qah8ldarrq" path="res://emitter.tscn" id="1_4dic6"]
+[ext_resource type="Texture2D" uid="uid://byky5u23xf6iu" path="res://walltexture.jpgf8e1ee5c-aa56-40f9-986a-a583fbad830bDefaultHQ.jpg" id="3_bpt47"]
+
+[sub_resource type="Environment" id="Environment_k4ahb"]
+background_energy_multiplier = 2.43
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 2.6
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_osoe3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n2mpi"]
+albedo_texture = ExtResource("3_bpt47")
+uv1_scale = Vector3(50, 50, 50)
+uv1_triplanar_sharpness = 0.812252
+uv1_world_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_60un7"]
+material = SubResource("StandardMaterial3D_n2mpi")
+
+[node name="start" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35234, 0)
+
+[node name="emitter" parent="." instance=ExtResource("1_4dic6")]
+transform = Transform3D(0.991301, 0.131616, 0, -0.131616, 0.991301, 0, 0, 0, 1, 1.48362, 2.90174, -3.26706)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.998266, 0.0243713, -0.053591, -0.0204259, 0.997125, 0.0729743, 0.0552154, -0.0717531, 0.995893, 0.865516, 0.110759, 3.33787)
+fov = 50.1819
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_k4ahb")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.8994, 3.45461, 6.42936)
+light_energy = 4.048
+omni_range = 73.6948
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["breaks_fluid"]]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.08079, 0)
+shape = SubResource("WorldBoundaryShape3D_osoe3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(16.2151, 0, 0, 0, 0.22619, 0, 0, 0, 17.5872, 0, -3.09967, -3.08871)
+mesh = SubResource("BoxMesh_60un7")
