@@ -18,7 +18,3 @@ config/icon="res://icon.svg"
 [dotnet]
 
 project/assembly_name="compute_jelly"
-
-[physics]
-
-3d/default_gravity=1.0

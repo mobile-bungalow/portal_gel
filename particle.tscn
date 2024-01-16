@@ -9,7 +9,9 @@ radius = 0.2
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_04mvr"]
 render_priority = 0
 shader = ExtResource("1_3sp84")
-shader_parameter/k = 0.2
+shader_parameter/n_particles = null
+shader_parameter/radius = 0.15
+shader_parameter/k = 0.5
 shader_parameter/color = Color(0.196078, 0.247059, 0.960784, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_l8x2q"]
@@ -25,7 +27,6 @@ script = ExtResource("1_3sct5")
 shape = SubResource("SphereShape3D_euthx")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-instance_shader_parameters/radius = 0.2
 mesh = SubResource("SphereMesh_l8x2q")
 
 [node name="Area3D" type="Area3D" parent="."]

@@ -1,10 +1,10 @@
 shader_type spatial;
 //render_mode unshaded;
-uniform sampler3D noise;
 uniform sampler2D depth_texture : hint_depth_texture, repeat_disable, filter_nearest;
 uniform sampler2D particles;
 uniform int n_particles;
 
+uniform float radius = 0.2;
 uniform float k = 0.3;
 uniform vec3 color: source_color = vec3(0.0);
 varying vec3 world_camera;
@@ -37,7 +37,7 @@ vec3 hash3( uint n )
 
 float displacement(float seed_in, vec3 p) {
 	float frequency = 45.0;
-	float damping_factor = 0.02;
+	float damping_factor = 0.03;
 	float speed = (TIME * 4.2);
 	vec3 dim_factor = vec3(0.21, 0.23, 0.15);
 	vec3 world_wave = cos(p * dim_factor * frequency + speed);  
@@ -45,23 +45,33 @@ float displacement(float seed_in, vec3 p) {
 }
 
 
-float GetDist(vec3 p, vec4 point1, vec4 point2, vec4 point3) {
+float GetDist(vec3 p, vec4 point1, vec4 point2, vec4 point3, mat4 m) {
+   float d = length(p) - radius;// - displacement(seed, p); // Sphere
+
+ 	for (int i = 0; i < n_particles; i++) {
+        vec4 particle = texelFetch(particles, ivec2(i, 0), 0);
+        vec3 particlePos = transformPointToModelSpace(particle.rgb, inverse(m));
+        // Include particle position in ray marching
+        d = opSmoothUnion(d, length(p - particlePos) - radius);
+    }
+
 	// distance from the origin
-    float d = length(p) - radius;// - displacement(seed, p); // Sphere
-    float d2 = length(p - point1.xyz) - point1.w; // - displacement(s1, point1.xyz); // Sphere
-    float d3 = length(p - point2.xyz) - point2.w; // - displacement(s2, point2.xyz); // Sphere
-    float d4 = length(p - point3.xyz) - point3.w; // - displacement(s3, point3.xyz); 
+
+   // float d2 = length(p - point1.xyz) - point1.w; // - displacement(s1, point1.xyz); // Sphere
+   // float d3 = length(p - point2.xyz) - point2.w; // - displacement(s2, point2.xyz); // Sphere
+   // float d4 = length(p - point3.xyz) - point3.w; // - displacement(s3, point3.xyz); 
 	
-    return opSmoothUnion(opSmoothUnion(d, d4) , opSmoothUnion(d2, d3));
+    //return opSmoothUnion(opSmoothUnion(d, d4) , opSmoothUnion(d2, d3));
+	return d + displacement(0x1337, p);
 }
 
-float RayMarch(vec3 ro, vec3 rd, vec4 point1, vec4 point2, vec4 point3) {
+float RayMarch(vec3 ro, vec3 rd, vec4 point1, vec4 point2, vec4 point3, mat4 m) {
     float dO = 0.0;
     float dS;
 
     for (int i = 0; i < MAX_STEPS; i++) {
         vec3 p = ro + dO * rd;
-        dS = GetDist(p, point1, point2, point3);
+        dS = GetDist(p, point1, point2, point3, m);
         dO += dS;
 
         if (dS < SURF_DIST || dO > MAX_DIST)
@@ -71,13 +81,13 @@ float RayMarch(vec3 ro, vec3 rd, vec4 point1, vec4 point2, vec4 point3) {
 }
 
 
-vec3 GetNormal(vec3 p, vec4 point1, vec4 point2, vec4 point3) {
+vec3 GetNormal(vec3 p, vec4 point1, vec4 point2, vec4 point3, mat4 m) {
     vec2 e = vec2(1e-3, 0);
 
-    vec3 n = GetDist(p, point1, point2, point3) - vec3(
-        GetDist(p - e.xyy, point1, point2, point3),
-        GetDist(p - e.yxy, point1, point2, point3),
-        GetDist(p - e.yyx, point1, point2, point3)
+    vec3 n = GetDist(p, point1, point2, point3, m) - vec3(
+        GetDist(p - e.xyy, point1, point2, point3, m),
+        GetDist(p - e.yxy, point1, point2, point3, m),
+        GetDist(p - e.yyx, point1, point2, point3, m)
     );
 
     return normalize(n);
@@ -88,18 +98,19 @@ void vertex() {
     world_camera = (inverse(MODELVIEW_MATRIX) * vec4(0, 0, 0, 1)).xyz; // object space
 
     // Transform points from global to model space
-    model_p1 = vec4(transformPointToModelSpace(p1.xyz, inverse(MODEL_MATRIX)), p1.w);
-    model_p2 = vec4(transformPointToModelSpace(p2.xyz, inverse(MODEL_MATRIX)), p2.w);
-    model_p3 = vec4(transformPointToModelSpace(p3.xyz, inverse(MODEL_MATRIX)), p3.w);
+    //model_p1 = vec4(transformPointToModelSpace(p1.xyz, inverse(MODEL_MATRIX)), p1.w);
+    //model_p2 = vec4(transformPointToModelSpace(p2.xyz, inverse(MODEL_MATRIX)), p2.w);
+    //model_p3 = vec4(transformPointToModelSpace(p3.xyz, inverse(MODEL_MATRIX)), p3.w);
 }
 
 void fragment() {
     vec3 ro = world_camera;
     vec3 rd = normalize(world_position - ro);
 
-    float d = RayMarch(ro, rd, model_p1, model_p2, model_p3);
-	
-    float depth = textureLod(depth_texture, SCREEN_UV, 0.0).r;
+    //float d = RayMarch(ro, rd, model_p1, model_p2, model_p3);
+	float d = RayMarch(ro, rd, vec4(0.0), vec4(0.0), vec4(0.0), MODEL_MATRIX);
+    
+	float depth = textureLod(depth_texture, SCREEN_UV, 0.0).r;
 	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
 	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
   	view.xyz /= view.w;
@@ -109,7 +120,7 @@ void fragment() {
 		discard;
 	} else {
         vec3 p = ro + rd * d;
-        vec3 n = GetNormal(p, model_p1, model_p2, model_p3);
+        vec3 n = GetNormal(p, vec4(0.0), vec4(0.0), vec4(0.0), MODEL_MATRIX);
         ALBEDO = color;
 		NORMAL = n.rgb;
 		METALLIC = 0.6;

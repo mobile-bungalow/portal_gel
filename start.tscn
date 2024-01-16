@@ -23,10 +23,10 @@ material = SubResource("StandardMaterial3D_n2mpi")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35234, 0)
 
 [node name="emitter" parent="." instance=ExtResource("1_4dic6")]
-transform = Transform3D(0.991301, 0.131616, 0, -0.131616, 0.991301, 0, 0, 0, 1, 1.48362, 2.90174, -3.26706)
+transform = Transform3D(0.991301, 0.131616, 0, -0.131616, 0.991301, 0, 0, 0, 1, 0.966646, 2.08012, -6.32927)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.998266, 0.0243713, -0.053591, -0.0204259, 0.997125, 0.0729743, 0.0552154, -0.0717531, 0.995893, 0.865516, 0.110759, 3.33787)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0518845, -0.0672849, 3.87752)
 fov = 50.1819
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -38,13 +38,14 @@ light_energy = 4.048
 omni_range = 73.6948
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." groups=["breaks_fluid"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.84435, 0)
 collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.08079, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.956983, 0)
 shape = SubResource("WorldBoundaryShape3D_osoe3")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-transform = Transform3D(16.2151, 0, 0, 0, 0.22619, 0, 0, 0, 17.5872, 0, -3.09967, -3.08871)
+transform = Transform3D(16.2151, 0, 0, 0, 0.22619, 0, 0, 0, 17.5872, 0, -0.927927, -3.08871)
 mesh = SubResource("BoxMesh_60un7")
