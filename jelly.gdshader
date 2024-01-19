@@ -46,7 +46,7 @@ float displacement(float seed_in, vec3 p) {
 
 
 float GetDist(vec3 p, vec4 point1, vec4 point2, vec4 point3, mat4 m) {
-   float d = length(p) - radius;// - displacement(seed, p); // Sphere
+   float d = 100000.0;
 
  	for (int i = 0; i < n_particles; i++) {
         vec4 particle = texelFetch(particles, ivec2(i, 0), 0);
@@ -55,13 +55,6 @@ float GetDist(vec3 p, vec4 point1, vec4 point2, vec4 point3, mat4 m) {
         d = opSmoothUnion(d, length(p - particlePos) - radius);
     }
 
-	// distance from the origin
-
-   // float d2 = length(p - point1.xyz) - point1.w; // - displacement(s1, point1.xyz); // Sphere
-   // float d3 = length(p - point2.xyz) - point2.w; // - displacement(s2, point2.xyz); // Sphere
-   // float d4 = length(p - point3.xyz) - point3.w; // - displacement(s3, point3.xyz); 
-	
-    //return opSmoothUnion(opSmoothUnion(d, d4) , opSmoothUnion(d2, d3));
 	return d + displacement(0x1337, p);
 }
 
@@ -96,11 +89,6 @@ vec3 GetNormal(vec3 p, vec4 point1, vec4 point2, vec4 point3, mat4 m) {
 void vertex() {
     world_position = VERTEX;
     world_camera = (inverse(MODELVIEW_MATRIX) * vec4(0, 0, 0, 1)).xyz; // object space
-
-    // Transform points from global to model space
-    //model_p1 = vec4(transformPointToModelSpace(p1.xyz, inverse(MODEL_MATRIX)), p1.w);
-    //model_p2 = vec4(transformPointToModelSpace(p2.xyz, inverse(MODEL_MATRIX)), p2.w);
-    //model_p3 = vec4(transformPointToModelSpace(p3.xyz, inverse(MODEL_MATRIX)), p3.w);
 }
 
 void fragment() {

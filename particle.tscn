@@ -10,13 +10,13 @@ radius = 0.2
 render_priority = 0
 shader = ExtResource("1_3sp84")
 shader_parameter/n_particles = null
-shader_parameter/radius = 0.15
+shader_parameter/radius = 0.2
 shader_parameter/k = 0.5
 shader_parameter/color = Color(0.196078, 0.247059, 0.960784, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_l8x2q"]
 material = SubResource("ShaderMaterial_04mvr")
-radial_segments = 20
+radial_segments = 4
 rings = 10
 
 [node name="Node3D" type="RigidBody3D"]

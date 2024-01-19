@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://c78ubl22y0uai"]
+
+[ext_resource type="Shader" path="res://jelly_decal.gdshader" id="1_i76wm"]
+[ext_resource type="Script" path="res://jelly_decal.gd" id="1_vxwpe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fdvkv"]
+render_priority = 0
+shader = ExtResource("1_i76wm")
+shader_parameter/num_decals = null
+
+[sub_resource type="BoxMesh" id="BoxMesh_nqv3l"]
+material = SubResource("ShaderMaterial_fdvkv")
+size = Vector3(1.3, 1.3, 1.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cotco"]
+size = Vector3(0.440338, 0.40625, 0.480042)
+
+[node name="JellyDecal" type="Node3D"]
+script = ExtResource("1_vxwpe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_nqv3l")
+
+[node name="Area3D" type="Area3D" parent="." groups=["decals"]]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.154831, -0.171875, -0.134979)
+shape = SubResource("BoxShape3D_cotco")

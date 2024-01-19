@@ -4,3 +4,6 @@
 
 [node name="emitter" type="Node3D"]
 script = ExtResource("1_wei6y")
+
+[node name="decals" type="Node3D" parent="."]
+unique_name_in_owner = true
