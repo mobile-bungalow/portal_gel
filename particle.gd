@@ -10,7 +10,7 @@ var collision_shape_3d: CollisionShape3D
 
 
 signal spawn_decal(pos: Vector3)
-
+signal spawn_splat(pos: Vector3)
 
 func set_particle_image(image: ImageTexture):
     var mat = mesh_instance3d.get_active_material(0) as ShaderMaterial;
@@ -37,11 +37,11 @@ func _on_area_body_entered(body):
     if body.is_in_group("breaks_fluid"):
         var overlapped_bodies = area_3d.get_overlapping_areas()
         var in_decal = false
+        print("work")
+        emit_signal("spawn_splat", position)
         for b in overlapped_bodies:
             if b.is_in_group("decals"):
                 in_decal = true
         if not in_decal:
             emit_signal("spawn_decal", position)
-
-        queue_free()
-                    
+        queue_free()			

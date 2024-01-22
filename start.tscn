@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkely0bnm8po4"]
+[gd_scene load_steps=9 format=3 uid="uid://bkely0bnm8po4"]
 
 [ext_resource type="PackedScene" uid="uid://53qah8ldarrq" path="res://emitter.tscn" id="1_4dic6"]
 [ext_resource type="Texture2D" uid="uid://byky5u23xf6iu" path="res://walltexture.jpgf8e1ee5c-aa56-40f9-986a-a583fbad830bDefaultHQ.jpg" id="3_bpt47"]
+[ext_resource type="Texture2D" uid="uid://vxebrrs3rud7" path="res://NormalMap.png" id="3_nhih4"]
 [ext_resource type="PackedScene" uid="uid://c78ubl22y0uai" path="res://jelly_decal.tscn" id="3_rgbs2"]
 
 [sub_resource type="Environment" id="Environment_k4ahb"]
@@ -13,6 +14,8 @@ ambient_light_energy = 2.6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n2mpi"]
 albedo_texture = ExtResource("3_bpt47")
+normal_enabled = true
+normal_texture = ExtResource("3_nhih4")
 uv1_scale = Vector3(50, 50, 50)
 uv1_triplanar_sharpness = 0.812252
 uv1_world_triplanar = true
@@ -34,7 +37,7 @@ fov = 50.1819
 environment = SubResource("Environment_k4ahb")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.8994, 3.45461, 6.42936)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.24038, 6.66226, -5.98347)
 light_color = Color(0.717647, 0.92549, 0.996078, 1)
 light_energy = 4.856
 light_indirect_energy = 2.939
@@ -54,5 +57,19 @@ shape = SubResource("WorldBoundaryShape3D_osoe3")
 transform = Transform3D(16.2151, 0, 0, 0, 0.22619, 0, 0, 0, 17.5872, 0, -0.927927, -3.08871)
 mesh = SubResource("BoxMesh_60un7")
 
-[node name="JellyDecal" parent="." instance=ExtResource("3_rgbs2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.58565, -3.58809, 0.994969)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(-7.08785e-07, 0.22619, 0, -16.2151, -9.88708e-09, 0, 0, 0, 17.5872, 8.01402, 7.11129, -3.18198)
+mesh = SubResource("BoxMesh_60un7")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(-7.08785e-07, 0.22619, 0, -16.2151, -9.88708e-09, 0, 0, 0, 17.5872, -7.98598, 7.11129, -3.18198)
+mesh = SubResource("BoxMesh_60un7")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(4.09994e-14, -9.88708e-09, -17.5872, -16.2151, -9.88708e-09, 0, -7.08785e-07, 0.22619, -7.68761e-07, 0.0147748, 7.11129, -11.9434)
+mesh = SubResource("BoxMesh_60un7")
+
+[node name="ResourcePreloader" type="ResourcePreloader" parent="."]
+
+[node name="JellyDecal" parent="ResourcePreloader" instance=ExtResource("3_rgbs2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.298579)

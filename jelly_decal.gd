@@ -2,6 +2,11 @@ extends Node3D
 
 var mesh_instance3d: MeshInstance3D
 
+# only the first decal on any surface should render textures
+func not_first():
+	mesh_instance3d.visible = false;
+    
+
 func set_pos_tex(image: ImageTexture):
 	var mat = mesh_instance3d.get_active_material(0) as ShaderMaterial;
 	mat.set_shader_parameter("position_tex", image)
