@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dubl8vjvpceha"]
 
 [ext_resource type="Script" path="res://particle.gd" id="1_3sct5"]
-[ext_resource type="Shader" path="res://jelly.gdshader" id="1_3sp84"]
+[ext_resource type="Shader" path="res://shaders/jelly.gdshader" id="1_3sp84"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_euthx"]
 radius = 0.2

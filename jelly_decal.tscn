@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://c78ubl22y0uai"]
 
-[ext_resource type="Shader" path="res://jelly_decal.gdshader" id="1_i76wm"]
+[ext_resource type="Shader" path="res://shaders/jelly_decal.gdshader" id="1_i76wm"]
 [ext_resource type="Script" path="res://jelly_decal.gd" id="1_vxwpe"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_08bsu"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://53qah8ldarrq"]
 
 [ext_resource type="Script" path="res://emitter.gd" id="1_wei6y"]
-[ext_resource type="Shader" path="res://splat.gdshader" id="2_vqt4x"]
+[ext_resource type="Shader" path="res://shaders/splat.gdshader" id="2_vqt4x"]
 
 [sub_resource type="Curve" id="Curve_uepgp"]
 _data = [Vector2(0, 0.212), 0.0, 0.0, 0, 0, Vector2(1, 0.632), 0.0, 0.0, 0, 0]

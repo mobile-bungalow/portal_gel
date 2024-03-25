@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://bkely0bnm8po4"]
 
 [ext_resource type="PackedScene" uid="uid://53qah8ldarrq" path="res://emitter.tscn" id="1_4dic6"]
-[ext_resource type="Texture2D" uid="uid://byky5u23xf6iu" path="res://walltexture.jpgf8e1ee5c-aa56-40f9-986a-a583fbad830bDefaultHQ.jpg" id="3_bpt47"]
-[ext_resource type="Texture2D" uid="uid://vxebrrs3rud7" path="res://NormalMap.png" id="3_nhih4"]
+[ext_resource type="Texture2D" uid="uid://byky5u23xf6iu" path="res://textures/WallTexture.png" id="3_bpt47"]
+[ext_resource type="Texture2D" uid="uid://vxebrrs3rud7" path="res://textures/NormalMap.png" id="3_nhih4"]
 [ext_resource type="PackedScene" uid="uid://c78ubl22y0uai" path="res://jelly_decal.tscn" id="3_rgbs2"]
 
 [sub_resource type="Environment" id="Environment_k4ahb"]
@@ -44,28 +44,28 @@ light_indirect_energy = 2.939
 light_size = 0.071
 omni_range = 73.6948
 
-[node name="StaticBody3D" type="StaticBody3D" parent="." groups=["breaks_fluid"]]
+[node name="walls_and_floor" type="StaticBody3D" parent="." groups=["breaks_fluid"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.84435, 0)
 collision_layer = 3
 collision_mask = 3
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="walls_and_floor"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.956983, 0)
 shape = SubResource("WorldBoundaryShape3D_osoe3")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="walls_and_floor"]
 transform = Transform3D(16.2151, 0, 0, 0, 0.22619, 0, 0, 0, 17.5872, 0, -0.927927, -3.08871)
 mesh = SubResource("BoxMesh_60un7")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="walls_and_floor"]
 transform = Transform3D(-7.08785e-07, 0.22619, 0, -16.2151, -9.88708e-09, 0, 0, 0, 17.5872, 8.01402, 7.11129, -3.18198)
 mesh = SubResource("BoxMesh_60un7")
 
-[node name="MeshInstance3D3" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="walls_and_floor"]
 transform = Transform3D(-7.08785e-07, 0.22619, 0, -16.2151, -9.88708e-09, 0, 0, 0, 17.5872, -7.98598, 7.11129, -3.18198)
 mesh = SubResource("BoxMesh_60un7")
 
-[node name="MeshInstance3D4" type="MeshInstance3D" parent="StaticBody3D"]
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="walls_and_floor"]
 transform = Transform3D(4.09994e-14, -9.88708e-09, -17.5872, -16.2151, -9.88708e-09, 0, -7.08785e-07, 0.22619, -7.68761e-07, 0.0147748, 7.11129, -11.969)
 mesh = SubResource("BoxMesh_60un7")
 

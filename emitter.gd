@@ -57,12 +57,8 @@ func _on_spawn_timer_timeout():
 
 func spawn_splat(pos: Vector3):
     if first_decal:
-        #emitter.hide()
-        var node = emitter.duplicate();
         emitter.position = pos;
         emitter.emitting = true;
-        #emitter.show()
-    pass
 
 func spawn_decal(pos: Vector3):
     var color: Color = Color(pos.x, pos.y, pos.z, time)

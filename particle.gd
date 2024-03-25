@@ -24,12 +24,11 @@ func update_n_particles(n: int):
 func _ready():
     # Reference the child nodes using get_node
     mesh_instance3d = $MeshInstance3D
-    var p = mesh_instance3d.get_active_material(0) as ShaderMaterial;
     area_3d = $Area3D
     collision_shape_3d = $Area3D/CollisionShape3D
     area_3d.connect("body_entered", _on_area_body_entered)
 
-func _process(delta):
+func _process(_delta):
     pass
 
 
@@ -37,7 +36,6 @@ func _on_area_body_entered(body):
     if body.is_in_group("breaks_fluid"):
         var overlapped_bodies = area_3d.get_overlapping_areas()
         var in_decal = false
-        print("work")
         emit_signal("spawn_splat", position)
         for b in overlapped_bodies:
             if b.is_in_group("decals"):
