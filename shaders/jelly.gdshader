@@ -114,8 +114,5 @@ void fragment() {
 		METALLIC = 0.6;
 		SPECULAR = 0.4;
 		ROUGHNESS = 0.1;
-		//DEPTH = d;
     }
-
- //  ALBEDO = vec3(1.0);
 }

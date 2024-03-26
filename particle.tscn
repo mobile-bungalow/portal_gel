@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dubl8vjvpceha"]
+[gd_scene load_steps=7 format=3 uid="uid://dubl8vjvpceha"]
 
 [ext_resource type="Script" path="res://particle.gd" id="1_3sct5"]
 [ext_resource type="Shader" path="res://shaders/jelly.gdshader" id="1_3sp84"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_euthx"]
 radius = 0.2
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_a3gpd"]
+width = 2
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_04mvr"]
 render_priority = 0
@@ -13,6 +16,7 @@ shader_parameter/n_particles = null
 shader_parameter/radius = 0.2
 shader_parameter/k = 0.5
 shader_parameter/color = Color(0.196078, 0.247059, 0.960784, 1)
+shader_parameter/particles = SubResource("GradientTexture1D_a3gpd")
 
 [sub_resource type="SphereMesh" id="SphereMesh_l8x2q"]
 material = SubResource("ShaderMaterial_04mvr")
