@@ -92,11 +92,10 @@ void vertex() {
 }
 
 void fragment() {
-    vec3 ro = world_camera;
-    vec3 rd = normalize(world_position - ro);
+	// Ray Direction
+    vec3 rd = normalize(world_position - world_camera);
 
-    //float d = RayMarch(ro, rd, model_p1, model_p2, model_p3);
-	float d = RayMarch(ro, rd, vec4(0.0), vec4(0.0), vec4(0.0), MODEL_MATRIX);
+	float d = RayMarch(world_camera, rd, vec4(0.0), vec4(0.0), vec4(0.0), MODEL_MATRIX);
     
 	float depth = textureLod(depth_texture, SCREEN_UV, 0.0).r;
 	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth);
@@ -107,7 +106,7 @@ void fragment() {
     if (d >= MAX_DIST || d > linear_depth) {
 		discard;
 	} else {
-        vec3 p = ro + rd * d;
+        vec3 p = world_camera + rd * d;
         vec3 n = GetNormal(p, vec4(0.0), vec4(0.0), vec4(0.0), MODEL_MATRIX);
         ALBEDO = color;
 		NORMAL = n.rgb;
